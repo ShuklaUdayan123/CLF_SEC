@@ -1,0 +1,48 @@
+apis:
+  github:
+    endpoint: "https://api.github.com"
+    token: "YOUR_GITHUB_TOKEN_HERE"
+    target_repo: "cloudflare/cloudflare-go" # Example repo
+  stackoverflow:
+    endpoint: "https://api.stackexchange.com/2.3"
+    key: "YOUR_SO_API_KEY_HERE"
+    tags: ["cloudflare", "cloudflare-workers"]
+  reddit:
+    client_id: "YOUR_REDDIT_CLIENT_ID"
+    client_secret: "YOUR_REDDIT_CLIENT_SECRET"
+    user_agent: "CF_Issue_Tracker_v1.0"
+    target_subreddit: "CloudFlare"
+
+llm:
+  provider: "openai" # or "anthropic"
+  model: "gpt-4o-mini"
+  api_key: "YOUR_LLM_API_KEY_HERE"
+
+prompts:
+  relevance: |
+    You are an expert product manager for Cloudflare. Evaluate the following developer or user issue.
+    Is this friction point likely solvable by a Cloudflare product (e.g., Workers, R2, WAF, DNS, Zero Trust)?
+    Provide a JSON response with exactly these fields:
+    - "relevant" (boolean)
+    - "confidence_score" (float between 0-1)
+    - "reasoning" (string explaining why)
+
+  sentiment_prompt_generation: |
+    Analyze the following developer issue:
+    1. Generate a "simulated_user_prompt" - a single natural language question or prompt that this developer might write to an AI assistant (like ChatGPT or GitHub Copilot) trying to solve this exact problem.
+    2. Provide sentiment analysis (positive, neutral, negative) for:
+       - "cloudflare" (sentiment specifically towards Cloudflare or their products in the text)
+       - "general" (overall sentiment of the post)
+    Return exactly this JSON structure:
+    {
+      "simulated_user_prompt": "string...",
+      "sentiment": {
+        "cloudflare": "neutral|positive|negative",
+        "general": "neutral|positive|negative"
+      }
+    }
+
+storage:
+  output_dir: "./data"
+  processed_issues_file: "processed_issues.csv"
+  simulated_prompts_file: "simulated_prompts.json"
