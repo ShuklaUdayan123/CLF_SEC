@@ -1,4 +1,5 @@
-requests
-pyyaml
-pandas
-openai
+requests>=2.31
+pyyaml>=6.0
+pandas>=2.0
+numpy>=1.24
+openai>=1.0

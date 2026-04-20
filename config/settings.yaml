@@ -1,3 +1,7 @@
+# ============================================================
+# Cloudflare AI Intelligence & Visibility Pipeline — Config
+# ============================================================
+
 apis:
   github:
     endpoint: "https://api.github.com"
@@ -13,10 +17,29 @@ apis:
     user_agent: "CF_Issue_Tracker_v1.0"
     target_subreddit: "CloudFlare"
 
+semrush:
+  api_key: "YOUR_SEMRUSH_API_KEY"
+  base_url: "https://api.semrush.com"
+  endpoints:
+    keyword_gap: "/analytics/v1/keyword_gap"
+  competitor_domain: "aws.amazon.com/lambda"
+  target_domain: "developers.cloudflare.com"
+
+adobe_analytics:
+  client_id: "YOUR_ADOBE_CLIENT_ID"
+  client_secret: "YOUR_ADOBE_CLIENT_SECRET"
+  base_url: "https://analytics.adobe.io"
+  report_suite_id: "YOUR_REPORT_SUITE_ID"
+  endpoints:
+    traffic_metrics: "/api/1.4/report"
+
 llm:
   provider: "openai" # or "anthropic"
-  model: "gpt-4o-mini"
   api_key: "YOUR_LLM_API_KEY_HERE"
+  base_url: "https://api.openai.com/v1"
+  model: "gpt-4o"
+  temperature: 0.2
+  max_tokens: 512
 
 prompts:
   relevance: |
@@ -46,3 +69,10 @@ storage:
   output_dir: "./data"
   processed_issues_file: "processed_issues.csv"
   simulated_prompts_file: "simulated_prompts.json"
+
+pipeline:
+  output_dir: "./output"
+  report_filename: "executive_report.md"
+  log_level: "INFO"
+  quick_win_ease_min: 7
+  quick_win_reach_min: 5
